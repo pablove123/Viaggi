@@ -14,7 +14,8 @@ const create = async (req,res) => {
 
 const index = async (req,res) => {
   try{
-
+    const experiences = await Experience.find({})
+    res.status(200).json(experiences)
   }catch(err){
     console.log(err)
     res.status(500).json(err)
@@ -22,7 +23,8 @@ const index = async (req,res) => {
 }
 const show = async (req,res) => {
   try{
-
+    const experience = await Experience.findById(req.params.id)
+    res.status(200).json(experience)
   }catch(err){
     console.log(err)
     res.status(500).json(err)
@@ -31,6 +33,11 @@ const show = async (req,res) => {
 
 const update = async (req,res) => {
   try{
+    const experience = await Experience.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      {new:true})
+      res.status(200).json(experience)
 
   }catch(err){
     console.log(err)
@@ -40,7 +47,8 @@ const update = async (req,res) => {
 
 const deleteExperience = async (req,res) => {
   try{
-
+    const experience = await Experience.findByIdAndDelete(req.params.id)
+    res.status(200).json(experience)
   }catch(err){
     console.log(err)
     res.status(500).json(err)
@@ -49,7 +57,13 @@ const deleteExperience = async (req,res) => {
 
 const createReview = async (req,res) => {
   try{
+  const experience = await Experience.findById(req.params.id)
+  experience.review.push(req.body)
+  await experience.save()
 
+  const newReview = experience.review[experience.review.length -1]
+
+  res.status(201).json(newReview)
   }catch(err){
     console.log(err)
     res.status(500).json(err)
