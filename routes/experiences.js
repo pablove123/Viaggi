@@ -8,6 +8,7 @@ const router = Router()
 
 router.delete("/:id",  experiencesCtrl.delete)
 router.post('/:id/review', experiencesCtrl.createReview)
+router.delete('/:experienceId/review/:reviewId', experiencesCtrl.deleteReview)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
