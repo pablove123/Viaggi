@@ -73,9 +73,9 @@ const createReview = async (req,res) => {
 const deleteReview = async (req,res) => {
   try{
     const experience = await Experience.findById(req.params.experienceId)
-    experience.review.remove({ _id: req.params.reviewId })
-    res.status(200).json(experience)
-
+    experience.review.remove({ _id: req.params.reviewId})
+    await experience.save()
+    res.status(201).json(experience)
 
   }catch(err){
     console.log(err)
