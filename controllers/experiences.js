@@ -92,6 +92,19 @@ const deleteReview = async (req,res) => {
   }
 }
 
+const addPhoto = async (req,res) =>{
+    try {
+      const imageFile = req.files.photo.path
+      const experience = await Experience.findById(req.params.id)
+      const image = await cloudinary.uploader.upload(imageFile, {tags: `experiences`})
+      experience.photo = image.url
+      await experience.save()
+      res.status(201).json(experience.photo)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+    }
+}
 export{
   create, 
   index, 
@@ -99,5 +112,6 @@ export{
   update, 
   deleteExperience as delete, 
   createReview, 
-  deleteReview
+  deleteReview,
+  addPhoto
 }
