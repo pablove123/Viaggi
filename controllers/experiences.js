@@ -16,7 +16,7 @@ const create = async (req,res) => {
 const index = async (req,res) => {
   try{
     const experiences = await Experience.find({})
-    .populate("Author")
+    .populate("author")
     res.status(200).json(experiences)
   }catch(err){
     console.log(err)
@@ -26,7 +26,7 @@ const index = async (req,res) => {
 const show = async (req,res) => {
   try{
     const experience = await Experience.findById(req.params.id)
-    .populate("Author")
+    .populate("author")
     res.status(200).json(experience)
   }catch(err){
     console.log(err)
@@ -40,7 +40,7 @@ const update = async (req,res) => {
       req.params.id, 
       req.body, 
       {new:true})
-      .populate("Author")
+      .populate("author")
       res.status(200).json(experience)
 
   }catch(err){
