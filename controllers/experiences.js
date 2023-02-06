@@ -4,7 +4,9 @@ import { Profile } from '../models/profile.js'
 
 const create = async (req,res) => {
   try{
+    req.body.author = req.user.profile
     const experience = await Experience.create(req.body)
+    experience.author = profile
     res.status(200).json(experience)
   }catch(err){
     console.log(err)
@@ -15,6 +17,7 @@ const create = async (req,res) => {
 const index = async (req,res) => {
   try{
     const experiences = await Experience.find({})
+    .populate("Author")
     res.status(200).json(experiences)
   }catch(err){
     console.log(err)
@@ -24,6 +27,7 @@ const index = async (req,res) => {
 const show = async (req,res) => {
   try{
     const experience = await Experience.findById(req.params.id)
+    .populate("Author")
     res.status(200).json(experience)
   }catch(err){
     console.log(err)
@@ -37,6 +41,7 @@ const update = async (req,res) => {
       req.params.id, 
       req.body, 
       {new:true})
+      .populate("Author")
       res.status(200).json(experience)
 
   }catch(err){
@@ -57,11 +62,13 @@ const deleteExperience = async (req,res) => {
 
 const createReview = async (req,res) => {
   try{
+    req.body.author = req.user.profile
   const experience = await Experience.findById(req.params.id)
   experience.review.push(req.body)
   await experience.save()
 
   const newReview = experience.review[experience.review.length -1]
+  newReview.author = profile
 
   res.status(201).json(newReview)
   }catch(err){

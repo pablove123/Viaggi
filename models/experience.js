@@ -14,6 +14,7 @@ const expSchema = new Schema({
   name: String, 
   category: String, 
   description: String, 
+  author: { type: Schema.Types.ObjectId, ref: 'Profile' },
   review: [reviewSchema]
 },{
   timestamps: true,
