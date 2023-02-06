@@ -6,6 +6,8 @@ const create = async (req,res) => {
   try{
     req.body.author = req.user.profile
     const experience = await Experience.create(req.body)
+    const profile = await Profile.findById(req.user.profile)
+    experience.author = profile
     res.status(200).json(experience)
   }catch(err){
     console.log(err)
@@ -67,6 +69,8 @@ const createReview = async (req,res) => {
   await experience.save()
 
   const newReview = experience.review[experience.review.length -1]
+  const profile = await Profile.findById(req.user.profile)
+    review.author = profile
 
   res.status(201).json(newReview)
   }catch(err){
