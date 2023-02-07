@@ -29,6 +29,7 @@ const show = async (req,res) => {
   try{
     const experience = await Experience.findById(req.params.id)
     .populate("author")
+    .populate("review.author")
     res.status(200).json(experience)
   }catch(err){
     console.log(err)
@@ -61,23 +62,23 @@ const deleteExperience = async (req,res) => {
   }
 }
 
-const createReview = async (req,res) => {
-  try{
+const createReview = async (req, res) => {
+  try {
     req.body.author = req.user.profile
-  const experience = await Experience.findById(req.params.id)
-  experience.review.push(req.body)
-  await experience.save()
+    const experience = await Experience.findById(req.params.id)
+    experience.review.push(req.body)
+    await experience.save()
 
-  const newReview = experience.review[experience.review.length -1]
-  const profile = await Profile.findById(req.user.profile)
-    review.author = profile
+    const newReview = experience.review[experience.review.length - 1]
 
-  res.status(201).json(newReview)
-  }catch(err){
-    console.log(err)
-    res.status(500).json(err)
+    const profile = await Profile.findById(req.user.profile)
+    newReview.author = profile
+    res.status(201).json(newReview)
+  } catch (error) {
+    res.status(500).json(error)
   }
 }
+
 
 const deleteReview = async (req,res) => {
   try{
