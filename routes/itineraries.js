@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as profilesCtrl from '../controllers/profiles.js'
+import * as itinerariesCtrl from '../controllers/itineraries.js'
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 
 const router = Router()
@@ -7,10 +7,13 @@ const router = Router()
 /*---------- Public Routes ----------*/
 
 
+
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, profilesCtrl.index)
-router.get('/my-profile', checkAuth, profilesCtrl.show)
-router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
+
+router.post('/', checkAuth, itinerariesCtrl.create)
+router.post('/:itineraryId/experiences/:experienceId', checkAuth, itinerariesCtrl.addToItinerary)
+
+
 
 export { router }

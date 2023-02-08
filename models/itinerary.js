@@ -5,7 +5,6 @@ const Schema = mongoose.Schema
 const itinerarySchema = new Schema({
   experiences: [{type: Schema.Types.ObjectId, ref: "Experience"}],
   name: String, 
-  City: String, 
 },{
   timestamps: true,
 })
