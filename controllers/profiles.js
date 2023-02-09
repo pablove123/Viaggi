@@ -34,10 +34,6 @@ const show = async (req,res) => {
     const profile = await Profile.findById(req.user.profile)
     .populate({
       path: "itineraries",
-      // populate:{
-      //   path:"experiences", 
-      //   model: "Experience"
-      // }
     })
     
     res.status(200).json(profile)
