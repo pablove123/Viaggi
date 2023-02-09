@@ -25,9 +25,20 @@ const addToItinerary = async (req,res) => {
   }
 }
 
+const show = async (req,res) => {
+  try{
+    const itinerary = await Itinerary.findById(req.params.id)
+    .populate("experiences")
+    res.status(200).json(itinerary)
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
 
 
 export{
   create, 
-  addToItinerary
+  addToItinerary, 
+  show
 }

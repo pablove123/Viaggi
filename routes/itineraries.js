@@ -11,6 +11,7 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 
+router.get("/:id",checkAuth, itinerariesCtrl.show)
 router.post('/', checkAuth, itinerariesCtrl.create)
 router.post('/:itineraryId/experiences/:experienceId', checkAuth, itinerariesCtrl.addToItinerary)
 
