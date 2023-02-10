@@ -6,10 +6,10 @@ const router = Router()
 
 /*---------- Public Routes ----------*/
 
+router.get('/', experiencesCtrl.index)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, experiencesCtrl.index)
 router.get("/:id", checkAuth, experiencesCtrl.show)
 router.post('/',checkAuth, experiencesCtrl.create)
 router.post('/:id/review',checkAuth, experiencesCtrl.createReview)
